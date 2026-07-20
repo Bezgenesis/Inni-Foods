@@ -10,7 +10,4 @@ Items: {{ items_count }}
 Total: Rs. {{ total_amount }}
 Placed on: {{ order_date|date:"d M Y, g:i A" }}
 
-View order in admin:
-{{ admin_order_url }}
-
 — Automated notification for {{ site_name }} admins.
