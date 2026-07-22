@@ -48,8 +48,12 @@ export function Navbar() {
     >
       <div className="max-w-screen-xl mx-auto px-6">
         <div className="flex items-center justify-between h-14">
-          <NavLink to="/" className="font-bold tracking-tight text-xl text-white">
-            INNI
+          <NavLink to="/" className="inline-flex items-center" aria-label="INNI home">
+            <img
+              src="/images/brand/inni-logo.png"
+              alt="INNI"
+              className="h-8 w-auto object-contain"
+            />
           </NavLink>
 
           <div className="hidden md:flex items-center gap-5">

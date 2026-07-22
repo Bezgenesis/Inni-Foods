@@ -22,7 +22,7 @@ export function About() {
             >
               About
               <br />
-              INNI.
+              <span className="text-[#E33E2B]">INNI</span>
             </motion.h1>
 
             <motion.div
@@ -32,7 +32,7 @@ export function About() {
               className="lg:col-span-8 space-y-5 text-neutral-400 text-base md:text-lg font-light leading-relaxed"
             >
               <p>
-                <strong className="font-semibold text-white">INNI</strong> is a premium spice brand
+                <strong className="font-semibold text-[#E33E2B]">INNI</strong> is a premium spice brand
                 born from the rich heritage of Coorg and backed by the legacy and expertise of{' '}
                 <strong className="font-semibold text-white">Oakroad Ventures Pvt. Ltd.</strong> With{' '}
                 <strong className="font-semibold text-white">
@@ -50,10 +50,13 @@ export function About() {
                 , ensuring purity, authenticity, and exceptional taste in every pack. Today, we are
                 proud to serve{' '}
                 <strong className="font-semibold text-white">60,000+ happy customers</strong> who
-                trust INNI for its quality, consistency, and authentic flavour. We warmly invite
-                more quality-conscious families to become a part of the{' '}
-                <strong className="font-semibold text-white">INNI Foods Family</strong>, where
-                healthy, natural, and flavourful cooking is a way of life.
+                trust <span className="font-semibold text-[#E33E2B]">INNI</span> for its quality,
+                consistency, and authentic flavour. We warmly invite more quality-conscious families
+                to become a part of the{' '}
+                <strong className="font-semibold text-white">
+                  <span className="text-[#E33E2B]">INNI</span> Foods Family
+                </strong>
+                , where healthy, natural, and flavourful cooking is a way of life.
               </p>
               <p>
                 Driven by a passion for quality, tradition, and authentic taste, we create premium
@@ -71,8 +74,9 @@ export function About() {
                   complete, ready-to-use masala blends
                 </strong>{' '}
                 make cooking effortless, delivering authentic flavour, rich aroma, and consistent
-                taste in every meal. Whether for families, bachelors, or busy professionals, INNI
-                brings the trusted taste of Coorg&apos;s spice heritage to every kitchen.
+                taste in every meal. Whether for families, bachelors, or busy professionals,{' '}
+                <span className="font-semibold text-[#E33E2B]">INNI</span> brings the trusted taste of
+                Coorg&apos;s spice heritage to every kitchen.
               </p>
             </motion.div>
           </div>
@@ -135,12 +139,14 @@ export function About() {
                 leading pharmaceutical brands.
               </p>
               <p>
-                Driven by a vision to provide healthier food choices, he founded INNI with a
-                commitment to delivering premium spices and spice blends that are as natural as
-                possible. His philosophy is simple, to help quality-conscious households enjoy
-                authentic flavours without the use of artificial additives, chemicals, or added
-                colours. Today, his passion continues to guide INNI in creating pure, hygienic, and
-                flavourful spices inspired by the rich culinary heritage of Coorg.
+                Driven by a vision to provide healthier food choices, he founded{' '}
+                <span className="font-semibold text-[#E33E2B]">INNI</span> with a commitment to
+                delivering premium spices and spice blends that are as natural as possible. His
+                philosophy is simple, to help quality-conscious households enjoy authentic flavours
+                without the use of artificial additives, chemicals, or added colours. Today, his
+                passion continues to guide <span className="font-semibold text-[#E33E2B]">INNI</span>{' '}
+                in creating pure, hygienic, and flavourful spices inspired by the rich culinary
+                heritage of Coorg.
               </p>
             </div>
           </motion.div>
@@ -173,13 +179,21 @@ export function About() {
           </p>
           <dl className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-6 text-center">
             {STATS.map((stat) => (
-              <div key={stat.label} className="space-y-2">
+              <div key={stat.value} className="space-y-2">
                 <dt className="sr-only">{stat.label}</dt>
                 <dd className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tighter text-[#E33E2B]">
                   {stat.value}
                 </dd>
                 <dd className="text-xs sm:text-sm text-neutral-500 font-light leading-snug max-w-[10rem] mx-auto">
-                  {stat.label}
+                  {stat.label.includes('INNI') ? (
+                    <>
+                      {stat.label.split('INNI')[0]}
+                      <span className="text-[#E33E2B] font-semibold">INNI</span>
+                      {stat.label.split('INNI')[1]}
+                    </>
+                  ) : (
+                    stat.label
+                  )}
                 </dd>
               </div>
             ))}

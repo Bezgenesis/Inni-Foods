@@ -21,7 +21,11 @@ export function Footer() {
       <div className="max-w-screen-xl mx-auto px-6 text-neutral-400">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12 pb-12">
           <div className="col-span-1 md:col-span-1">
-            <span className="font-bold tracking-tight text-2xl text-white block mb-3">INNI</span>
+            <img
+              src="/images/brand/inni-logo.png"
+              alt="INNI"
+              className="h-10 w-auto object-contain mb-3"
+            />
             <address className="not-italic leading-relaxed text-neutral-500 text-xs space-y-0.5">
               <span className="block text-neutral-400">Oakroad Ventures Private Limited</span>
               <span className="block">Site No. 2</span>

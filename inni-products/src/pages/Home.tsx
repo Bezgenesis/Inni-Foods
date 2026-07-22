@@ -97,7 +97,10 @@ export function Home() {
               />
               <div className="absolute inset-y-0 left-0 w-[55%] bg-gradient-to-r from-black/90 via-black/45 to-transparent" />
               <div className="relative z-10 max-w-xl">
-                 <h3 className="text-3xl md:text-5xl font-semibold tracking-tighter text-white mb-4 leading-tight">Sourced globally. <br/>Crafted locally.</h3>
+                 <h3 className="text-3xl md:text-5xl font-semibold tracking-tighter text-white mb-4 leading-tight">
+                   Nature&apos;s Finest. <br />
+                   Crafted for Every Kitchen.
+                 </h3>
                  <p className="text-neutral-400 text-lg">Delivering rich aroma, exceptional flavour, and consistent quality.</p>
               </div>
             </div>
