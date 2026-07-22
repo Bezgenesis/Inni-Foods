@@ -4,7 +4,7 @@ from .utils import user_can_manage_orders, user_can_manage_users, user_is_admin_
 
 
 class IsSuperAdmin(BasePermission):
-    """Only active Super Admin users — highest privilege level."""
+    """Only active Super Admin users - highest privilege level."""
 
     message = 'Super Admin access required.'
 
@@ -20,14 +20,14 @@ class IsAdminStaff(BasePermission):
 
 
 class IsOrderManager(BasePermission):
-    """Super Admin only — full order management access."""
+    """Super Admin only - full order management access."""
 
     def has_permission(self, request, view) -> bool:
         return user_can_manage_orders(request.user)
 
 
 class IsUserManager(BasePermission):
-    """Super Admin only — user and role management."""
+    """Super Admin only - user and role management."""
 
     def has_permission(self, request, view) -> bool:
         return user_can_manage_users(request.user)

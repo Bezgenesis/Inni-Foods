@@ -22,6 +22,7 @@ export function Navbar() {
     { name: 'Shop', path: '/shop' },
     { name: 'Offers', path: '/offers' },
     { name: 'Track Order', path: '/track-order' },
+    { name: 'About Us', path: '/about' },
     { name: 'Get Now', path: '/contact' },
   ];
 

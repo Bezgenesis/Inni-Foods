@@ -1,6 +1,6 @@
 /**
  * Dynamically loads the Razorpay checkout script.
- * Only the public key_id is used on the frontend — never the secret.
+ * Only the public key_id is used on the frontend - never the secret.
  */
 export function loadRazorpayScript(): Promise<boolean> {
   return new Promise((resolve) => {
