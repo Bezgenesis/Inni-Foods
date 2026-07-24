@@ -55,6 +55,9 @@ export function Footer() {
               <a href="tel:+918197046698" className="text-white font-normal hover:text-[#E33E2B] transition-colors duration-200 block">
                 +91 81970 46698
               </a>
+              <a href="tel:+919740460936" className="text-white font-normal hover:text-[#E33E2B] transition-colors duration-200 block">
+                +91 97404 60936
+              </a>
             </div>
             <div>
               <span className="font-bold text-white block mb-1">Email:</span>

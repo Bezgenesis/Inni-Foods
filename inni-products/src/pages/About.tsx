@@ -4,7 +4,7 @@ import { motion } from 'motion/react';
 const STATS = [
   { value: '4', label: 'Generations of spice cultivation' },
   { value: '60+', label: 'Years of milling excellence' },
-  { value: '60K+', label: 'Happy customers who trust INNI' },
+  { value: '60K+', label: 'Happy customers who trust INNI foods' },
 ] as const;
 
 export function About() {
@@ -22,7 +22,7 @@ export function About() {
             >
               About
               <br />
-              <span className="text-[#E33E2B]">INNI</span>
+              <span className="text-[#E33E2B]">INNI foods</span>
             </motion.h1>
 
             <motion.div
@@ -32,7 +32,7 @@ export function About() {
               className="lg:col-span-8 space-y-5 text-neutral-400 text-base md:text-lg font-light leading-relaxed"
             >
               <p>
-                <strong className="font-semibold text-[#E33E2B]">INNI</strong> is a premium spice brand
+                <strong className="font-semibold text-[#E33E2B]">INNI foods</strong> is a premium spice brand
                 born from the rich heritage of Coorg and backed by the legacy and expertise of{' '}
                 <strong className="font-semibold text-white">Oakroad Ventures Pvt. Ltd.</strong> With{' '}
                 <strong className="font-semibold text-white">
@@ -50,11 +50,11 @@ export function About() {
                 , ensuring purity, authenticity, and exceptional taste in every pack. Today, we are
                 proud to serve{' '}
                 <strong className="font-semibold text-white">60,000+ happy customers</strong> who
-                trust <span className="font-semibold text-[#E33E2B]">INNI</span> for its quality,
+                trust <span className="font-semibold text-[#E33E2B]">INNI foods</span> for its quality,
                 consistency, and authentic flavour. We warmly invite more quality-conscious families
                 to become a part of the{' '}
                 <strong className="font-semibold text-white">
-                  <span className="text-[#E33E2B]">INNI</span> Foods Family
+                  <span className="text-[#E33E2B]">INNI foods</span> Family
                 </strong>
                 , where healthy, natural, and flavourful cooking is a way of life.
               </p>
@@ -75,7 +75,7 @@ export function About() {
                 </strong>{' '}
                 make cooking effortless, delivering authentic flavour, rich aroma, and consistent
                 taste in every meal. Whether for families, bachelors, or busy professionals,{' '}
-                <span className="font-semibold text-[#E33E2B]">INNI</span> brings the trusted taste of
+                <span className="font-semibold text-[#E33E2B]">INNI foods</span> brings the trusted taste of
                 Coorg&apos;s spice heritage to every kitchen.
               </p>
             </motion.div>
@@ -140,11 +140,11 @@ export function About() {
               </p>
               <p>
                 Driven by a vision to provide healthier food choices, he founded{' '}
-                <span className="font-semibold text-[#E33E2B]">INNI</span> with a commitment to
+                <span className="font-semibold text-[#E33E2B]">INNI foods</span> with a commitment to
                 delivering premium spices and spice blends that are as natural as possible. His
                 philosophy is simple, to help quality-conscious households enjoy authentic flavours
                 without the use of artificial additives, chemicals, or added colours. Today, his
-                passion continues to guide <span className="font-semibold text-[#E33E2B]">INNI</span>{' '}
+                passion continues to guide <span className="font-semibold text-[#E33E2B]">INNI foods</span>{' '}
                 in creating pure, hygienic, and flavourful spices inspired by the rich culinary
                 heritage of Coorg.
               </p>
@@ -171,11 +171,11 @@ export function About() {
       {/* Stats */}
       <section
         className="py-24 md:py-32 border-t border-white/[0.05] px-6"
-        aria-label="INNI at a glance"
+        aria-label="INNI foods at a glance"
       >
         <div className="max-w-screen-xl mx-auto">
           <p className="text-[10px] uppercase tracking-[0.35em] text-[#E33E2B] font-semibold mb-10 md:mb-14 text-center">
-            INNI by the numbers
+            INNI foods by the numbers
           </p>
           <dl className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-6 text-center">
             {STATS.map((stat) => (
@@ -185,11 +185,11 @@ export function About() {
                   {stat.value}
                 </dd>
                 <dd className="text-xs sm:text-sm text-neutral-500 font-light leading-snug max-w-[10rem] mx-auto">
-                  {stat.label.includes('INNI') ? (
+                  {stat.label.includes('INNI foods') ? (
                     <>
-                      {stat.label.split('INNI')[0]}
-                      <span className="text-[#E33E2B] font-semibold">INNI</span>
-                      {stat.label.split('INNI')[1]}
+                      {stat.label.split('INNI foods')[0]}
+                      <span className="text-[#E33E2B] font-semibold">INNI foods</span>
+                      {stat.label.split('INNI foods')[1]}
                     </>
                   ) : (
                     stat.label
