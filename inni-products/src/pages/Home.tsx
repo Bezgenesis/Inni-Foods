@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Product } from '../types';
 import { fetchAllProducts } from '../lib/api';
+import { ReviewsSection } from '../components/home/ReviewsSection';
 
 export function Home() {
   const [featured, setFeatured] = useState<Product[]>([]);
@@ -32,7 +33,7 @@ export function Home() {
           className="absolute inset-0 z-0"
         >
           <img
-            src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=2500&q=80"
+            src="/images/home/hero-spices.jpg"
             alt="Premium Spices"
             className="w-full h-full object-cover brightness-110 contrast-105"
           />
@@ -78,7 +79,9 @@ export function Home() {
         <div className="max-w-screen-xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-semibold tracking-tighter text-white">Innovation in every pinch.</h2>
-            <p className="mt-4 text-lg text-neutral-400 font-light">Refined through generations, perfected by science.</p>
+            <p className="mt-4 text-lg text-neutral-400 font-light max-w-3xl mx-auto">
+              Premium spice brand born from the rich heritage of Coorg ensuring purity, authenticity, and exceptional taste in every pack, where healthy, natural, and flavourful cooking is a way of life.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -94,8 +97,11 @@ export function Home() {
               />
               <div className="absolute inset-y-0 left-0 w-[55%] bg-gradient-to-r from-black/90 via-black/45 to-transparent" />
               <div className="relative z-10 max-w-xl">
-                 <h3 className="text-3xl md:text-5xl font-semibold tracking-tighter text-white mb-4 leading-tight">Sourced globally. <br/>Crafted locally.</h3>
-                 <p className="text-neutral-400 text-lg">We partner directly with the world's most elite spice farms.</p>
+                 <h3 className="text-3xl md:text-5xl font-semibold tracking-tighter text-white mb-4 leading-tight">
+                   Nature&apos;s Finest. <br />
+                   Crafted for Every Kitchen.
+                 </h3>
+                 <p className="text-neutral-400 text-lg">Delivering rich aroma, exceptional flavour, and consistent quality.</p>
               </div>
             </div>
           </div>
@@ -121,7 +127,7 @@ export function Home() {
               to="/shop"
               className="group inline-flex items-center gap-2 text-sm font-medium text-neutral-400 hover:text-white transition-colors shrink-0"
             >
-              See all models
+              Go to shop
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
             </NavLink>
           </div>
@@ -144,6 +150,8 @@ export function Home() {
           </div>
         </div>
       </section>
+
+      <ReviewsSection />
     </div>
   );
 }

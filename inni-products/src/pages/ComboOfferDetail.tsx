@@ -117,7 +117,7 @@ export function ComboOfferDetail() {
               {offer.title}
             </h1>
             <p className="text-neutral-500 font-light text-sm md:text-base mb-10 max-w-md leading-relaxed">
-              Introductory launch hamper — a curated selection of inni masalas and spice powders at an exclusive bundle price.
+              Introductory launch hamper, a curated selection of inni masalas and spice powders at an exclusive bundle price.
             </p>
 
             {/* Pricing card */}

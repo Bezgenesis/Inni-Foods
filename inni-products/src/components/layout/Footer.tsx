@@ -7,6 +7,7 @@ export function Footer() {
     { name: 'Shop', path: '/shop' },
     { name: 'Offers', path: '/offers' },
     { name: 'Track Order', path: '/track-order' },
+    { name: 'About Us', path: '/about' },
     { name: 'Get Now', path: '/contact' },
   ];
 
@@ -20,7 +21,11 @@ export function Footer() {
       <div className="max-w-screen-xl mx-auto px-6 text-neutral-400">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12 pb-12">
           <div className="col-span-1 md:col-span-1">
-            <span className="font-bold tracking-tight text-2xl text-white block mb-3">INNI</span>
+            <img
+              src="/images/brand/inni-logo.png"
+              alt="INNI"
+              className="h-10 w-auto object-contain mb-3"
+            />
             <address className="not-italic leading-relaxed text-neutral-500 text-xs space-y-0.5">
               <span className="block text-neutral-400">Oakroad Ventures Private Limited</span>
               <span className="block">Site No. 2</span>
@@ -49,6 +54,9 @@ export function Footer() {
               <span className="font-bold text-white block mb-1">Call :</span>
               <a href="tel:+918197046698" className="text-white font-normal hover:text-[#E33E2B] transition-colors duration-200 block">
                 +91 81970 46698
+              </a>
+              <a href="tel:+919740460936" className="text-white font-normal hover:text-[#E33E2B] transition-colors duration-200 block">
+                +91 97404 60936
               </a>
             </div>
             <div>

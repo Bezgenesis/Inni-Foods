@@ -220,12 +220,23 @@ export function Contact() {
 
                 <div>
                   <p className={labelClassName}>Phone</p>
-                  <a
-                    href="tel:+918197046698"
-                    className="mt-2 inline-block text-sm sm:text-base font-medium tracking-tight text-white transition-colors duration-300 hover:text-[#E33E2B]"
-                  >
-                    +91 81970 46698
-                  </a>
+                  <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+                    <a
+                      href="tel:+918197046698"
+                      className="inline-block text-sm sm:text-base font-medium tracking-tight text-white transition-colors duration-300 hover:text-[#E33E2B]"
+                    >
+                      +91 81970 46698
+                    </a>
+                    <span className="text-neutral-600" aria-hidden="true">
+                      |
+                    </span>
+                    <a
+                      href="tel:+919740460936"
+                      className="inline-block text-sm sm:text-base font-medium tracking-tight text-white transition-colors duration-300 hover:text-[#E33E2B]"
+                    >
+                      +91 97404 60936
+                    </a>
+                  </div>
                 </div>
 
                 <div>

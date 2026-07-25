@@ -1,6 +1,6 @@
 export type PaymentStatus = 'pending' | 'success' | 'failed';
 
-/** @deprecated Use CreateOrderPayload from types/index.ts — kept for legacy payment endpoints */
+/** @deprecated Use CreateOrderPayload from types/index.ts - kept for legacy payment endpoints */
 export interface LegacyPaymentOrderPayload {
   amount: number;
   currency?: string;

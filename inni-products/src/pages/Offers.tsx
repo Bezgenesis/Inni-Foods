@@ -15,7 +15,7 @@ export function Offers() {
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <img
-          src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=1600&q=80"
+          src="/images/home/hero-spices.jpg"
           alt=""
           className="absolute inset-0 w-full h-full object-cover scale-105 brightness-110 contrast-105"
         />
@@ -30,7 +30,7 @@ export function Offers() {
             Offers
           </h1>
           <p className="text-lg md:text-xl text-neutral-300 font-light leading-relaxed max-w-2xl mb-12 drop-shadow">
-            Three exclusive combo hampers — curated masala blends and spice powders at special launch prices.
+            Three exclusive combo hampers, curated masala blends and spice powders at special launch prices.
           </p>
           <button
             onClick={scrollToHighlights}
@@ -63,7 +63,7 @@ export function Offers() {
               Combo Offers
             </h2>
             <p className="text-sm md:text-base text-neutral-500 mt-5 leading-relaxed font-light max-w-lg mx-auto">
-              Limited-time hampers with our bestselling masalas and spice powders — crafted for the discerning home cook.
+              Limited-time hampers with our bestselling masalas and spice powders, crafted for the discerning home cook.
             </p>
           </div>
 

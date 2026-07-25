@@ -12,6 +12,7 @@ import { TrackOrder } from './pages/TrackOrder';
 import { ProductDetail } from './pages/ProductDetail';
 import { ComboOfferDetail } from './pages/ComboOfferDetail';
 import { Legal } from './pages/Legal';
+import { About } from './pages/About';
 import { CartProvider } from './hooks/useCart';
 
 import { ProtectedRoute } from './routes/ProtectedRoute';
@@ -42,6 +43,7 @@ export default function App() {
             <Route path="checkout" element={<Checkout />} />
             <Route path="success" element={<CheckoutSuccess />} />
             <Route path="track-order" element={<TrackOrder />} />
+            <Route path="about" element={<About />} />
             <Route path="partner" element={<Partner />} />
             <Route path="legal" element={<Legal />} />
             <Route path="product/:id" element={<ProductDetail />} />

@@ -50,4 +50,4 @@ class Command(BaseCommand):
         if ok:
             self.stdout.write(self.style.SUCCESS(f'WhatsApp sent to {phone}'))
         else:
-            self.stdout.write(self.style.ERROR('WhatsApp failed — check logs and .env settings'))
+            self.stdout.write(self.style.ERROR('WhatsApp failed - check logs and .env settings'))
