@@ -360,7 +360,7 @@ export const COMBO_OFFERS: ComboOffer[] = [
     id: 'combo-offer-3',
     title: 'Combo Offer 3',
     offerPrice: 1140,
-    totalWeight: '18 × 60 gms + Chattni 400 gms',
+    totalWeight: '17 × 60 gms + Chattni 200 gms',
     image: '/images/offers/combo-offer-1.png',
     items: [
       { name: 'Chicken Masala', weight: '60 gms' },
@@ -380,7 +380,7 @@ export const COMBO_OFFERS: ComboOffer[] = [
       { name: 'Sambar Powder', weight: '60 gms' },
       { name: 'Garam Masala', weight: '60 gms' },
       { name: 'Channa Masala', weight: '60 gms' },
-      { name: 'Chattni Powder', weight: '400 gms', price: 200 },
+      { name: 'Chattni Powder', weight: '200 gms' },
     ],
   },
 ];
