@@ -23,6 +23,7 @@ export interface User {
 export interface ProductWeightVariant {
   weight: string;
   price: number;
+  costEffectiveness?: string;
 }
 
 export interface Product {
