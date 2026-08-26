@@ -9,8 +9,11 @@ export function Cart() {
   const { cartItems, updateQuantity, removeFromCart } = useCart();
 
   const subtotal = cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
-  const shipping = 0;
-  const total = subtotal + (cartItems.length > 0 ? shipping : 0);
+  const FREE_DELIVERY_THRESHOLD = 950;
+  const SHIPPING_CHARGE = 950;
+  const shipping =
+    cartItems.length > 0 && subtotal < FREE_DELIVERY_THRESHOLD ? SHIPPING_CHARGE : 0;
+  const total = subtotal + shipping;
   const itemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
@@ -157,8 +160,20 @@ export function Cart() {
                 <div className="space-y-4 pb-6 border-b border-white/[0.06]">
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-neutral-500">Shipping</span>
-                    <span className="font-medium tabular-nums text-emerald-400">Free</span>
+                    <span
+                      className={`font-medium tabular-nums ${
+                        shipping === 0 ? 'text-emerald-400' : 'text-white'
+                      }`}
+                    >
+                      {shipping === 0 ? 'Free' : `₹${shipping.toLocaleString('en-IN')}`}
+                    </span>
                   </div>
+                  {shipping > 0 && (
+                    <p className="text-xs text-neutral-500">
+                      Free delivery on orders of ₹{FREE_DELIVERY_THRESHOLD.toLocaleString('en-IN')} and
+                      above.
+                    </p>
+                  )}
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-neutral-500">Subtotal</span>
                     <span className="text-white font-medium tabular-nums">

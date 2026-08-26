@@ -54,8 +54,11 @@ export function Checkout() {
   const phoneError = getPhoneError(shippingInfo.phone, phoneTouched);
 
   const subtotal = cartItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
-  const shipping = 0;
-  const total = subtotal + (cartItems.length > 0 ? shipping : 0);
+  const FREE_DELIVERY_THRESHOLD = 950;
+  const SHIPPING_CHARGE = 950;
+  const shipping =
+    cartItems.length > 0 && subtotal < FREE_DELIVERY_THRESHOLD ? SHIPPING_CHARGE : 0;
+  const total = subtotal + shipping;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -304,11 +307,18 @@ export function Checkout() {
             <div className="border-t border-white/10 pt-4 space-y-3 mb-6 text-sm text-neutral-400">
               <div className="flex justify-between">
                 <span>Shipping</span>
-                <span>Free</span>
+                <span className={shipping === 0 ? 'text-emerald-400' : undefined}>
+                  {shipping === 0 ? 'Free' : `₹${shipping.toLocaleString('en-IN')}`}
+                </span>
               </div>
+              {cartItems.length > 0 && shipping > 0 && (
+                <p className="text-xs text-neutral-500">
+                  Free delivery on orders of ₹{FREE_DELIVERY_THRESHOLD.toLocaleString('en-IN')} and above.
+                </p>
+              )}
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>₹{subtotal}</span>
+                <span>₹{subtotal.toLocaleString('en-IN')}</span>
               </div>
             </div>
 

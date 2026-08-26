@@ -183,6 +183,11 @@ export function ProductDetail() {
                 <span className="text-3xl md:text-4xl font-semibold text-white">
                   ₹{displayProduct.price.toLocaleString('en-IN')}
                 </span>
+                {selectedOption?.costEffectiveness && (
+                  <span className="text-sm md:text-base font-bold uppercase tracking-wide text-[#E33E2B]">
+                    {selectedOption.costEffectiveness}
+                  </span>
+                )}
                 {isKit && kit?.originalPrice && (
                   <>
                     <span className="text-xl text-neutral-500 line-through">
