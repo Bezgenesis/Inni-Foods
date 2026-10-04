@@ -198,12 +198,23 @@ CORS_ALLOWED_ORIGINS = [
 ]
 CORS_ALLOW_CREDENTIALS = True
 
-# Email — Brevo HTTPS API (SMTP is blocked on Railway Hobby / many PaaS hosts)
-BREVO_API_KEY = os.getenv('BREVO_API_KEY', '').strip()
-EMAIL_BACKEND = os.getenv(
-    'EMAIL_BACKEND',
-    'notifications.brevo_backend.EmailBackend' if BREVO_API_KEY else 'django.core.mail.backends.smtp.EmailBackend',
-)
+# Email — Brevo HTTPS transactional API only (SMTP is blocked on Railway Hobby)
+def _env_secret(*names: str) -> str:
+    for name in names:
+        value = os.getenv(name, '').strip().strip('"').strip("'")
+        if value:
+            return value
+    return ''
+
+
+BREVO_API_KEY = _env_secret('BREVO_API_KEY', 'SENDINBLUE_API_KEY')
+_raw_email_backend = os.getenv('EMAIL_BACKEND', '').strip()
+if _raw_email_backend.endswith(('console.EmailBackend', 'locmem.EmailBackend')):
+    EMAIL_BACKEND = _raw_email_backend
+else:
+    # Always use HTTPS API in deployed environments. Ignore SMTP EMAIL_BACKEND.
+    EMAIL_BACKEND = 'notifications.brevo_backend.EmailBackend'
+
 EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp-relay.brevo.com')
 EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
 EMAIL_USE_TLS = env_bool('EMAIL_USE_TLS', default=True)
@@ -215,7 +226,7 @@ DEFAULT_FROM_EMAIL = (
     or 'INNI Foods <noreply@innifoods.com>'
 )
 
-EMAIL_CONFIGURED = bool(BREVO_API_KEY) or bool(EMAIL_HOST_USER and EMAIL_HOST_PASSWORD) or EMAIL_BACKEND.endswith(
+EMAIL_CONFIGURED = bool(BREVO_API_KEY) or EMAIL_BACKEND.endswith(
     ('console.EmailBackend', 'locmem.EmailBackend'),
 )
 EMAIL_SUBJECT_PREFIX = os.getenv('EMAIL_SUBJECT_PREFIX', '[inni] ')
