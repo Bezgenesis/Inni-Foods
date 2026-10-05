@@ -80,6 +80,11 @@ class EmailBackend(BaseEmailBackend):
             'to': [_split_address(sanitize_address(addr, encoding)) for addr in message.to],
             'subject': message.subject or '',
         }
+        sender_email = payload['sender'].get('email', '')
+        if not sender_email or '@' not in sender_email:
+            raise RuntimeError(f'Invalid DEFAULT_FROM_EMAIL: {from_email!r}')
+        if not payload['to']:
+            raise RuntimeError('Email has no recipients')
         if message.cc:
             payload['cc'] = [_split_address(sanitize_address(addr, encoding)) for addr in message.cc]
         if message.bcc:
