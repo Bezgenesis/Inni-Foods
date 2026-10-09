@@ -207,7 +207,15 @@ def _env_secret(*names: str) -> str:
     return ''
 
 
-BREVO_API_KEY = _env_secret('BREVO_API_KEY', 'SENDINBLUE_API_KEY')
+BREVO_API_KEY = _env_secret(
+    'BREVO_API_KEY',
+    'BREVO_KEY',
+    'BREVO_API_TOKEN',
+    'BREVO_TOKEN',
+    'BREVO_SMTP_KEY',
+    'BREVO_SECRET',
+    'SENDINBLUE_API_KEY',
+)
 _raw_email_backend = os.getenv('EMAIL_BACKEND', '').strip()
 if _raw_email_backend.endswith(('console.EmailBackend', 'locmem.EmailBackend')):
     EMAIL_BACKEND = _raw_email_backend
@@ -221,16 +229,22 @@ EMAIL_USE_TLS = env_bool('EMAIL_USE_TLS', default=True)
 EMAIL_HOST_USER = os.getenv('BREVO_SMTP_LOGIN', os.getenv('EMAIL_HOST_USER', '')).strip()
 EMAIL_HOST_PASSWORD = os.getenv('BREVO_SMTP_KEY', os.getenv('EMAIL_HOST_PASSWORD', '')).strip()
 
-DEFAULT_FROM_EMAIL = (
-    os.getenv('DEFAULT_FROM_EMAIL', '').strip()
-    or 'INNI Foods <noreply@innifoods.com>'
-)
+_default_from = os.getenv('DEFAULT_FROM_EMAIL', '').strip()
+if not _default_from:
+    _sender = os.getenv('BREVO_SENDER_EMAIL', os.getenv('BREVO_SMTP_LOGIN', os.getenv('EMAIL_HOST_USER', ''))).strip()
+    if _sender and '@' in _sender:
+        _default_from = f'INNI Foods <{_sender}>'
+    else:
+        _default_from = 'INNI Foods <noreply@innifoods.com>'
+
+DEFAULT_FROM_EMAIL = _default_from
 
 EMAIL_CONFIGURED = bool(BREVO_API_KEY) or EMAIL_BACKEND.endswith(
     ('console.EmailBackend', 'locmem.EmailBackend'),
 )
 EMAIL_SUBJECT_PREFIX = os.getenv('EMAIL_SUBJECT_PREFIX', '[inni] ')
 ADMIN_OTP_TTL_MINUTES = int(os.getenv('ADMIN_OTP_TTL_MINUTES', '5'))
+
 
 
 # New order email notifications (super_admin + order_manager)
