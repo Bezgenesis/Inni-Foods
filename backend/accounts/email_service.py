@@ -1,13 +1,13 @@
 import logging
 
 from django.conf import settings
-from django.core.mail import EmailMultiAlternatives
+from notifications.brevo_backend import send_brevo_api_email
 
 logger = logging.getLogger(__name__)
 
 
 def send_admin_otp_email(email: str, otp: str) -> None:
-    """Send 6-digit OTP to a registered admin email via Brevo."""
+    """Send 6-digit OTP to a registered admin email via Brevo HTTPS API."""
     subject = f'{settings.EMAIL_SUBJECT_PREFIX}Your inni admin login code'
     ttl = settings.ADMIN_OTP_TTL_MINUTES
 
@@ -67,15 +67,14 @@ def send_admin_otp_email(email: str, otp: str) -> None:
 </body>
 </html>"""
 
-    message = EmailMultiAlternatives(
+    send_brevo_api_email(
+        to_email=email,
         subject=subject,
-        body=text_body,
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        to=[email],
+        html_content=html_body,
+        text_content=text_body,
     )
-    message.attach_alternative(html_body, 'text/html')
-    message.send(fail_silently=False)
-    logger.info('Admin OTP email sent to %s', email)
+    logger.info('Admin OTP email sent to %s via Brevo API', email)
+
 
 
 def send_contact_message_email(

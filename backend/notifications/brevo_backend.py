@@ -24,11 +24,15 @@ logger = logging.getLogger(__name__)
 BREVO_SEND_URL = 'https://api.brevo.com/v3/smtp/email'
 
 
-def _split_address(address: str) -> dict[str, str]:
+def _split_address(address: str, default_name: str = '') -> dict[str, str]:
     name, email = parseaddr(address)
-    result: dict[str, str] = {'email': email or address}
+    email = (email or address or '').strip().strip('<').strip('>')
+    name = (name or '').strip().strip('"').strip("'")
+    result: dict[str, str] = {'email': email}
     if name:
         result['name'] = name
+    elif default_name:
+        result['name'] = default_name
     return result
 
 
@@ -46,16 +50,24 @@ def _html_and_text(message: EmailMessage) -> tuple[str | None, str | None]:
     return html_content, text_content
 
 
+def _get_brevo_api_key() -> str:
+    key = getattr(settings, 'BREVO_API_KEY', '').strip().strip('"').strip("'")
+    return key
+
+
 class EmailBackend(BaseEmailBackend):
     def send_messages(self, email_messages: list[EmailMessage]) -> int:
         if not email_messages:
             return 0
 
-        api_key = getattr(settings, 'BREVO_API_KEY', '').strip()
+        api_key = _get_brevo_api_key()
         if not api_key:
-            logger.error('BREVO_API_KEY is not configured; cannot send email')
+            logger.error('BREVO_API_KEY is not configured; cannot send email via Brevo API')
             if not self.fail_silently:
-                raise RuntimeError('BREVO_API_KEY is not configured')
+                raise RuntimeError(
+                    'BREVO_API_KEY is not configured. '
+                    'Please set BREVO_API_KEY in environment variables.'
+                )
             return 0
 
         sent = 0
@@ -63,8 +75,8 @@ class EmailBackend(BaseEmailBackend):
             try:
                 self._send(message, api_key)
                 sent += 1
-            except Exception:
-                logger.exception('Brevo email send failed for subject=%r', message.subject)
+            except Exception as exc:
+                logger.exception('Brevo email send failed for subject=%r: %s', message.subject, exc)
                 if not self.fail_silently:
                     raise
         return sent
@@ -75,20 +87,33 @@ class EmailBackend(BaseEmailBackend):
             message.from_email or settings.DEFAULT_FROM_EMAIL,
             encoding,
         )
+        sender = _split_address(from_email, default_name='INNI Foods')
+        if not sender.get('email') or '@' not in sender['email']:
+            raise RuntimeError(f'Invalid DEFAULT_FROM_EMAIL: {from_email!r}')
+
+        recipients = [
+            _split_address(sanitize_address(addr, encoding))
+            for addr in message.to
+            if addr and '@' in addr
+        ]
+        if not recipients:
+            raise RuntimeError('Email has no recipients')
+
         payload: dict = {
-            'sender': _split_address(from_email),
-            'to': [_split_address(sanitize_address(addr, encoding)) for addr in message.to],
+            'sender': sender,
+            'to': recipients,
             'subject': message.subject or '',
         }
-        sender_email = payload['sender'].get('email', '')
-        if not sender_email or '@' not in sender_email:
-            raise RuntimeError(f'Invalid DEFAULT_FROM_EMAIL: {from_email!r}')
-        if not payload['to']:
-            raise RuntimeError('Email has no recipients')
         if message.cc:
-            payload['cc'] = [_split_address(sanitize_address(addr, encoding)) for addr in message.cc]
+            payload['cc'] = [
+                _split_address(sanitize_address(addr, encoding))
+                for addr in message.cc if addr and '@' in addr
+            ]
         if message.bcc:
-            payload['bcc'] = [_split_address(sanitize_address(addr, encoding)) for addr in message.bcc]
+            payload['bcc'] = [
+                _split_address(sanitize_address(addr, encoding))
+                for addr in message.bcc if addr and '@' in addr
+            ]
         if message.reply_to:
             payload['replyTo'] = _split_address(sanitize_address(message.reply_to[0], encoding))
 
@@ -123,15 +148,63 @@ class EmailBackend(BaseEmailBackend):
                 'accept': 'application/json',
                 'content-type': 'application/json',
                 'api-key': api_key,
+                'user-agent': 'InniBackend/1.0',
             },
         )
         try:
             with urlopen(request, timeout=20, context=ssl.create_default_context()) as response:
                 response.read()
+                logger.info('Brevo HTTPS API email sent successfully to %r', [r['email'] for r in recipients])
         except HTTPError as exc:
             detail = exc.read().decode('utf-8', errors='replace')
             logger.error('Brevo API HTTP %s: %s', exc.code, detail)
-            raise
+            raise RuntimeError(f'Brevo API HTTP {exc.code}: {detail}') from exc
         except URLError as exc:
             logger.error('Brevo API connection failed: %s', exc.reason)
-            raise
+            raise RuntimeError(f'Brevo API connection failed: {exc.reason}') from exc
+
+
+def send_brevo_api_email(
+    *,
+    to_email: str,
+    subject: str,
+    html_content: str,
+    text_content: str | None = None,
+    from_email: str | None = None,
+    reply_to: str | None = None,
+) -> None:
+    """
+    Directly sends an email via Brevo HTTPS API v3.
+    If EMAIL_BACKEND is configured as console/locmem in dev, delegates to Django core mail.
+    """
+    from django.core.mail import EmailMultiAlternatives
+
+    backend_name = getattr(settings, 'EMAIL_BACKEND', '')
+    if backend_name.endswith(('console.EmailBackend', 'locmem.EmailBackend')):
+        msg = EmailMultiAlternatives(
+            subject=subject,
+            body=text_content or '',
+            from_email=from_email or settings.DEFAULT_FROM_EMAIL,
+            to=[to_email],
+        )
+        if html_content:
+            msg.attach_alternative(html_content, 'text/html')
+        if reply_to:
+            msg.reply_to = [reply_to]
+        msg.send(fail_silently=False)
+        return
+
+    msg = EmailMultiAlternatives(
+        subject=subject,
+        body=text_content or '',
+        from_email=from_email or settings.DEFAULT_FROM_EMAIL,
+        to=[to_email],
+    )
+    if html_content:
+        msg.attach_alternative(html_content, 'text/html')
+    if reply_to:
+        msg.reply_to = [reply_to]
+
+    backend = EmailBackend(fail_silently=False)
+    backend.send_messages([msg])
+
